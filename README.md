@@ -52,27 +52,27 @@ To let an item be rendered as active you only need to let the corresponding menu
 
 1. Most of the times you can simple pass a string to the rendermenu function describing the voice that you want to be activated
 
-    $data['hmenu']=$this->art_menu->rendermenu('hmenu','home/subpage1');
+        $data['hmenu']=$this->art_menu->rendermenu('hmenu','home/subpage1');
 
-the string is composed by array indexes name and a '/' is used to separate primary item from their submenu items. 
-In the previous example, subpage1 item that is a child of home item, will be rendered as active.
+    the string is composed by array indexes name and a '/' is used to separate primary item from their submenu items. 
+    In the previous example, subpage1 item that is a child of home item, will be rendered as active.
 
 2. If you want to manually set an item as active, or you need to activate more than one item, you should manually modify the array:
 
-    $this->art_menu->hmenu["home"]["active"]=TRUE;
+        $this->art_menu->hmenu["home"]["active"]=TRUE;
 
-Take note that for certain menu, to properly activate a submenu item you should also activate the parent menu item, as done in the following example:
+    Take note that for certain menu, to properly activate a submenu item you should also activate the parent menu item, as done in the following example:
 
-    $this->art_menu->hmenu["home"]["items"]["subpage1"]["active"]=TRUE;
-    $this->art_menu->hmenu["home"]["active"]=TRUE;
+        $this->art_menu->hmenu["home"]["items"]["subpage1"]["active"]=TRUE;
+        $this->art_menu->hmenu["home"]["active"]=TRUE;
 
 3. If you want to render active a voice _by_ _default_, you can modify the config file declaring in the corrispondant menu item "active" as TRUE
 
-    $config['hmenu']= array(
- 		'home' => array('label' => 'Home', 'url' => '/', 'active' => TRUE),
- 		'login' => array('label' => 'Login', 'url' => '/user/login' ),
-  		'credits' => array('label' => 'Credits', 'url' => '/page/credits' )					
- 	);
+        $config['hmenu']= array(
+ 		    'home' => array('label' => 'Home', 'url' => '/', 'active' => TRUE),
+ 		    'login' => array('label' => 'Login', 'url' => '/user/login' ),
+  	    	'credits' => array('label' => 'Credits', 'url' => '/page/credits' )					
+ 	    );
  			
 ###Dinamically modify the menu
 If you want to add, modify a menu item (only for certain page or only in certain condition), or completly override the menu, you can modify the public menu array after loaded the library and before rendering the menu 
