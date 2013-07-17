@@ -16,6 +16,8 @@
  * 
  */
 
+ 
+// Configure the horizontal menu
 $config['hmenu']= array(
  					'home' => array('label' => 'Home', 'url' => '/', 'items' => array(
  						'subpage1' => array('label' => 'Subpage 1', 'url' => '/page/sub1'),
@@ -24,6 +26,8 @@ $config['hmenu']= array(
  					'login' => array('label' => 'Login', 'url' => '/user/login' ),
   					'credits' => array('label' => 'Credits', 'url' => '/page/credits' )					
  					);
+
+// Configure the vertical menu
 					
 $config['vmenu']= array(
  					'home' => array('label' => 'Home', 'url' => '/', 'items' => array(
