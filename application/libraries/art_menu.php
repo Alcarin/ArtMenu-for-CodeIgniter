@@ -89,15 +89,17 @@ class art_menu {
 	{
 		$sub=explode("/", $label,2);
 		$array[$sub[0]]['active']=TRUE;
-		if (isset($array[$sub[0]]['items'])) 
-		{
-			if (is_array($array[$sub[0]]['items'])) 
-			{
-				if ($sub[1]!='') 
+		if (count($sub)>1) {
+			if (isset($array[$sub[0]]['items'])) 
+			{	
+				if (is_array($array[$sub[0]]['items'])) 
 				{
-					$this->activate($sub[1],$array[$sub[0]]['items']);
-				}	
-			}
+					if ($sub[1]!='') 
+					{
+						$this->activate($sub[1],$array[$sub[0]]['items']);
+					}	
+				}
+			}	
 		}
 		
 	}
