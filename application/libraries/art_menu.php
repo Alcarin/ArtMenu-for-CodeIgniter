@@ -93,10 +93,12 @@ class art_menu {
 		{
 			if (is_array($array[$sub[0]]['items'])) 
 			{
-				if ($sub[1]!='') 
-				{
-					$this->activate($sub[1],$array[$sub[0]]['items']);
-				}	
+				if (isset($sub[1])) {
+					if ($sub[1]!='') 
+					{
+						$this->activate($sub[1],$array[$sub[0]]['items']);
+					}	
+				}
 			}
 		}
 		
