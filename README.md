@@ -1,10 +1,10 @@
 ArtMenu-for-CodeIgniter
 =======================
 
-Artisteer 4 Menu Library for CodeIngiter allow to create ul tag utilized by artisteer to print the horizontal and vertical menus, simply declaring an array.
+Artisteer 4 Menu Library for CodeIngiter allow to create ul tag utilized by artisteer to print the horizontal and vertical menus, simply as declaring an array.
 Feature list:
 
-* Create a menu structure simply declaring an array
+* Create a menu structure through declaring an array
 * Create shared menu, declaring the menu array in a config file
 * Modify the shared menu "on the fly" before render it
 * Utilize a string to specify wich item in the menu must be rendered as "active/selected" 
@@ -14,13 +14,13 @@ Feature list:
 
 * copy application/libraries/art_menu.php in your application/libraries/  folder
 * copy application/config/art_menu.php in your application/config  folder
-* modify your application/config/art_menu.php to adapt to your website menu
+* modify your application/config/art_menu.php to describe your website menu
 
 application/controller/page.php contain controller usage examples.
 
 ##Usage Example
 
-Use the application/config/art_menu.php to describe your website standard menus (the ones that should be showed in the major port of your website). For example:
+Use the application/config/art_menu.php to describe your website menus. For example:
 
     $config['hmenu']= array(
  		'home' => array('label' => 'Home', 'url' => '/', 'items' => array(
@@ -37,7 +37,7 @@ In a controller you must load the library, render the menu and send the rendered
   	$data['hmenu']=$this->art_menu->rendermenu('hmenu');
   	$this->load->view('page',$data);
 
-In a view you need only to echo the rendered menu:
+In a view you need only to echo the rendered menu instead of menu <ul>:
 
     <?=$hmenu?>
  
@@ -75,20 +75,24 @@ To let an item be rendered as active you only need to let the corresponding menu
  	    );
  			
 ###Dinamically modify the menu
-If you want to add, modify a menu item (only for certain page or only in certain condition), or completly override the menu, you can modify the public menu array after loaded the library and before rendering the menu 
+If you want to add, modify a menu item (only for certain page/controller or only in certain condition), or completly override the menu, you can modify the public menu array after loaded the library and before rendering the menu 
 
     $this->load->library('art_menu');
 
-after loaded the library, we can for example modify the login menu item with logout functionality:
+after loaded the library, you can for example modify the login menu item with logout functionality:
 
     $this->art_menu->hmenu['login']['label']='Logout';
     $this->art_menu->hmenu['login']['url']='/user/logout';
+    
+or
 
-or we can add another menu item if an user is authenticated
+	$this->art_menu->hmenu['login']=array('label' => 'Logout', 'url' => '/user/logout' );
+
+or you can add another menu item if an user is authenticated
 
     $this->art_menu->hmenu['admin']=array('label' => 'Admin', 'url' => '/page/admin');
     
-or we can completly override the menu configured in the config file 
+or you can completly override the menu configured in the config file 
 
     $this->art_menu->vmenu=array(
  		'home' => array('label' => 'Home', 'url' => '/', 'items' => array(
@@ -102,8 +106,12 @@ or we can completly override the menu configured in the config file
  		'login' => array('label' => 'Login', 'url' => '/user/login' ),
   		'credits' => array('label' => 'Credits', 'url' => '/page/credits' )					
  		);
+ 		
+or you can promote a submenu to root menu 
+
+	$this->art_menu->vmenu=$this->art_menu->vmenu['home']['items']
  					
-after we have modified the menu, we can render it and send the result to a view (in the followin code we are rendering bot horizontal and vertical menu)
+after you have modified the menu, you can render it and send the result to a view (in the followin code horizontal and vertical menu are rendered in two distinct views)
 
   	$data['hmenu']=$this->art_menu->rendermenu('hmenu');
   	$data['vmenu']=$this->art_menu->rendermenu('vmenu');
