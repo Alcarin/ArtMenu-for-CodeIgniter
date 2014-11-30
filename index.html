@@ -34,11 +34,11 @@
         <h1>
 <a id="artmenu-for-codeigniter" class="anchor" href="#artmenu-for-codeigniter" aria-hidden="true"><span class="octicon octicon-link"></span></a>ArtMenu-for-CodeIgniter</h1>
 
-<p>Artisteer 4 Menu Library for CodeIngiter allow to create ul tag utilized by artisteer to print the horizontal and vertical menus, simply declaring an array.
+<p>Artisteer 4 Menu Library for CodeIngiter allow to create ul tag utilized by artisteer to print the horizontal and vertical menus, simply as declaring an array.
 Feature list:</p>
 
 <ul>
-<li>Create a menu structure simply declaring an array</li>
+<li>Create a menu structure through declaring an array</li>
 <li>Create shared menu, declaring the menu array in a config file</li>
 <li>Modify the shared menu "on the fly" before render it</li>
 <li>Utilize a string to specify wich item in the menu must be rendered as "active/selected" </li>
@@ -51,7 +51,7 @@ Feature list:</p>
 <ul>
 <li>copy application/libraries/art_menu.php in your application/libraries/  folder</li>
 <li>copy application/config/art_menu.php in your application/config  folder</li>
-<li>modify your application/config/art_menu.php to adapt to your website menu</li>
+<li>modify your application/config/art_menu.php to describe your website menu</li>
 </ul>
 
 <p>application/controller/page.php contain controller usage examples.</p>
@@ -59,7 +59,7 @@ Feature list:</p>
 <h2>
 <a id="usage-example" class="anchor" href="#usage-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage Example</h2>
 
-<p>Use the application/config/art_menu.php to describe your website standard menus (the ones that should be showed in the major port of your website). For example:</p>
+<p>Use the application/config/art_menu.php to describe your website menus. For example:</p>
 
 <pre><code>$config['hmenu']= array(
     'home' =&gt; array('label' =&gt; 'Home', 'url' =&gt; '/', 'items' =&gt; array(
@@ -78,9 +78,9 @@ $data['hmenu']=$this-&gt;art_menu-&gt;rendermenu('hmenu');
 $this-&gt;load-&gt;view('page',$data);
 </code></pre>
 
-<p>In a view you need only to echo the rendered menu:</p>
+<p>In a view you need only to echo the rendered menu instead of menu </p><ul>:
 
-<pre><code>&lt;?=$hmenu?&gt;
+</ul><pre><code>&lt;?=$hmenu?&gt;
 </code></pre>
 
 <p>Perform the previous steps for hmenu (horizontal menu) and/or vmenu (vertical menu).</p>
@@ -131,23 +131,28 @@ $this-&gt;art_menu-&gt;hmenu["home"]["active"]=TRUE;
 <h3>
 <a id="dinamically-modify-the-menu" class="anchor" href="#dinamically-modify-the-menu" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dinamically modify the menu</h3>
 
-<p>If you want to add, modify a menu item (only for certain page or only in certain condition), or completly override the menu, you can modify the public menu array after loaded the library and before rendering the menu </p>
+<p>If you want to add, modify a menu item (only for certain page/controller or only in certain condition), or completly override the menu, you can modify the public menu array after loaded the library and before rendering the menu </p>
 
 <pre><code>$this-&gt;load-&gt;library('art_menu');
 </code></pre>
 
-<p>after loaded the library, we can for example modify the login menu item with logout functionality:</p>
+<p>after loaded the library, you can for example modify the login menu item with logout functionality:</p>
 
 <pre><code>$this-&gt;art_menu-&gt;hmenu['login']['label']='Logout';
 $this-&gt;art_menu-&gt;hmenu['login']['url']='/user/logout';
 </code></pre>
 
-<p>or we can add another menu item if an user is authenticated</p>
+<p>or</p>
+
+<pre><code>$this-&gt;art_menu-&gt;hmenu['login']=array('label' =&gt; 'Logout', 'url' =&gt; '/user/logout' );
+</code></pre>
+
+<p>or you can add another menu item if an user is authenticated</p>
 
 <pre><code>$this-&gt;art_menu-&gt;hmenu['admin']=array('label' =&gt; 'Admin', 'url' =&gt; '/page/admin');
 </code></pre>
 
-<p>or we can completly override the menu configured in the config file </p>
+<p>or you can completly override the menu configured in the config file </p>
 
 <pre><code>$this-&gt;art_menu-&gt;vmenu=array(
     'home' =&gt; array('label' =&gt; 'Home', 'url' =&gt; '/', 'items' =&gt; array(
@@ -163,7 +168,12 @@ $this-&gt;art_menu-&gt;hmenu['login']['url']='/user/logout';
     );
 </code></pre>
 
-<p>after we have modified the menu, we can render it and send the result to a view (in the followin code we are rendering bot horizontal and vertical menu)</p>
+<p>or you can promote a submenu to root menu </p>
+
+<pre><code>$this-&gt;art_menu-&gt;vmenu=$this-&gt;art_menu-&gt;vmenu['home']['items']
+</code></pre>
+
+<p>after you have modified the menu, you can render it and send the result to a view (in the followin code horizontal and vertical menu are rendered in two distinct views)</p>
 
 <pre><code>$data['hmenu']=$this-&gt;art_menu-&gt;rendermenu('hmenu');
 $data['vmenu']=$this-&gt;art_menu-&gt;rendermenu('vmenu');
