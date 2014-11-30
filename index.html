@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Artmenu-for-codeigniter : Artisteer 4 Menu Library for CodeIngiter">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Artmenu-for-codeigniter</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/Alcarin/ArtMenu-for-CodeIgniter">View on GitHub</a>
+
+          <h1 id="project_title">Artmenu-for-codeigniter</h1>
+          <h2 id="project_tagline">Artisteer 4 Menu Library for CodeIngiter</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/Alcarin/ArtMenu-for-CodeIgniter/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/Alcarin/ArtMenu-for-CodeIgniter/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="artmenu-for-codeigniter" class="anchor" href="#artmenu-for-codeigniter" aria-hidden="true"><span class="octicon octicon-link"></span></a>ArtMenu-for-CodeIgniter</h1>
+
+<p>Artisteer 4 Menu Library for CodeIngiter allow to create ul tag utilized by artisteer to print the horizontal and vertical menus, simply declaring an array.
+Feature list:</p>
+
+<ul>
+<li>Create a menu structure simply declaring an array</li>
+<li>Create shared menu, declaring the menu array in a config file</li>
+<li>Modify the shared menu "on the fly" before render it</li>
+<li>Utilize a string to specify wich item in the menu must be rendered as "active/selected" </li>
+<li>Manage infinite submenus</li>
+</ul>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<ul>
+<li>copy application/libraries/art_menu.php in your application/libraries/  folder</li>
+<li>copy application/config/art_menu.php in your application/config  folder</li>
+<li>modify your application/config/art_menu.php to adapt to your website menu</li>
+</ul>
+
+<p>application/controller/page.php contain controller usage examples.</p>
+
+<h2>
+<a id="usage-example" class="anchor" href="#usage-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage Example</h2>
+
+<p>Use the application/config/art_menu.php to describe your website standard menus (the ones that should be showed in the major port of your website). For example:</p>
+
+<pre><code>$config['hmenu']= array(
+    'home' =&gt; array('label' =&gt; 'Home', 'url' =&gt; '/', 'items' =&gt; array(
+        'subpage1' =&gt; array('label' =&gt; 'Subpage 1', 'url' =&gt; '/page/sub1'),
+        'subpage2' =&gt; array('label' =&gt; 'Subpage 2', 'url' =&gt; '/page/sub2'),
+        'subpage3' =&gt; array('label' =&gt; 'Subpage 3', 'url' =&gt; '/page/sub3'))),
+    'login' =&gt; array('label' =&gt; 'Login', 'url' =&gt; '/user/login' ),
+    'credits' =&gt; array('label' =&gt; 'Credits', 'url' =&gt; '/page/credits' )                 
+);
+</code></pre>
+
+<p>In a controller you must load the library, render the menu and send the rendered menu to a view:</p>
+
+<pre><code>$this-&gt;load-&gt;library('art_menu');
+$data['hmenu']=$this-&gt;art_menu-&gt;rendermenu('hmenu');
+$this-&gt;load-&gt;view('page',$data);
+</code></pre>
+
+<p>In a view you need only to echo the rendered menu:</p>
+
+<pre><code>&lt;?=$hmenu?&gt;
+</code></pre>
+
+<p>Perform the previous steps for hmenu (horizontal menu) and/or vmenu (vertical menu).</p>
+
+<h2>
+<a id="advanced-features" class="anchor" href="#advanced-features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Advanced Features</h2>
+
+<h3>
+<a id="making-an-item-rendered-as-selected" class="anchor" href="#making-an-item-rendered-as-selected" aria-hidden="true"><span class="octicon octicon-link"></span></a>Making an item rendered as selected</h3>
+
+<p>Array items, other than label, url and items (submenus) support the index "active" that if is TRUE let the menu item rendered as active/selected.
+To let an item be rendered as active you only need to let the corresponding menu item have the "active" index set to TRUE, and you can do that in those ways:</p>
+
+<ol>
+<li>
+<p>Most of the times you can simple pass a string to the rendermenu function describing the voice that you want to be activated</p>
+
+<pre><code>$data['hmenu']=$this-&gt;art_menu-&gt;rendermenu('hmenu','home/subpage1');
+</code></pre>
+
+<p>the string is composed by array indexes name and a '/' is used to separate primary item from their submenu items. 
+In the previous example, subpage1 item that is a child of home item, will be rendered as active.</p>
+</li>
+<li>
+<p>If you want to manually set an item as active, or you need to activate more than one item, you should manually modify the array:</p>
+
+<pre><code>$this-&gt;art_menu-&gt;hmenu["home"]["active"]=TRUE;
+</code></pre>
+
+<p>Take note that for certain menu, to properly activate a submenu item you should also activate the parent menu item, as done in the following example:</p>
+
+<pre><code>$this-&gt;art_menu-&gt;hmenu["home"]["items"]["subpage1"]["active"]=TRUE;
+$this-&gt;art_menu-&gt;hmenu["home"]["active"]=TRUE;
+</code></pre>
+</li>
+<li>
+<p>If you want to render active a voice <em>by</em> <em>default</em>, you can modify the config file declaring in the corrispondant menu item "active" as TRUE</p>
+
+<pre><code>$config['hmenu']= array(
+    'home' =&gt; array('label' =&gt; 'Home', 'url' =&gt; '/', 'active' =&gt; TRUE),
+    'login' =&gt; array('label' =&gt; 'Login', 'url' =&gt; '/user/login' ),
+    'credits' =&gt; array('label' =&gt; 'Credits', 'url' =&gt; '/page/credits' )                 
+);
+</code></pre>
+</li>
+</ol>
+
+<h3>
+<a id="dinamically-modify-the-menu" class="anchor" href="#dinamically-modify-the-menu" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dinamically modify the menu</h3>
+
+<p>If you want to add, modify a menu item (only for certain page or only in certain condition), or completly override the menu, you can modify the public menu array after loaded the library and before rendering the menu </p>
+
+<pre><code>$this-&gt;load-&gt;library('art_menu');
+</code></pre>
+
+<p>after loaded the library, we can for example modify the login menu item with logout functionality:</p>
+
+<pre><code>$this-&gt;art_menu-&gt;hmenu['login']['label']='Logout';
+$this-&gt;art_menu-&gt;hmenu['login']['url']='/user/logout';
+</code></pre>
+
+<p>or we can add another menu item if an user is authenticated</p>
+
+<pre><code>$this-&gt;art_menu-&gt;hmenu['admin']=array('label' =&gt; 'Admin', 'url' =&gt; '/page/admin');
+</code></pre>
+
+<p>or we can completly override the menu configured in the config file </p>
+
+<pre><code>$this-&gt;art_menu-&gt;vmenu=array(
+    'home' =&gt; array('label' =&gt; 'Home', 'url' =&gt; '/', 'items' =&gt; array(
+        'subpage1' =&gt; array('label' =&gt; 'Subpage 1', 'url' =&gt; '/page/sub1','items'=&gt;array(
+            'login' =&gt; array('label' =&gt; 'Login', 'url' =&gt; '/user/login' ),
+            'credits' =&gt; array('label' =&gt; 'Credits', 'url' =&gt; '/page/credits', 'items'=&gt;array(
+                'login' =&gt; array('label' =&gt; 'Login', 'url' =&gt; '/user/login' ),
+                'credits' =&gt; array('label' =&gt; 'Credits', 'url' =&gt; '/page/credits' ) ))  )),
+        'subpage2' =&gt; array('label' =&gt; 'Subpage 2', 'url' =&gt; '/page/sub2'),
+        'subpage3' =&gt; array('label' =&gt; 'Subpage 3', 'url' =&gt; '/page/sub3'))),
+    'login' =&gt; array('label' =&gt; 'Login', 'url' =&gt; '/user/login' ),
+    'credits' =&gt; array('label' =&gt; 'Credits', 'url' =&gt; '/page/credits' )                 
+    );
+</code></pre>
+
+<p>after we have modified the menu, we can render it and send the result to a view (in the followin code we are rendering bot horizontal and vertical menu)</p>
+
+<pre><code>$data['hmenu']=$this-&gt;art_menu-&gt;rendermenu('hmenu');
+$data['vmenu']=$this-&gt;art_menu-&gt;rendermenu('vmenu');
+$this-&gt;load-&gt;view('header',$data);
+$this-&gt;load-&gt;view('column1',$data);
+</code></pre>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Artmenu-for-codeigniter maintained by <a href="https://github.com/Alcarin">Alcarin</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
